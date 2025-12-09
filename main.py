@@ -1,28 +1,46 @@
-import os
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+import dotenv
+from langchain_core.messages import HumanMessage
+from agent import get_agent_graph
 
-def verify_api():
-    load_dotenv()
-    api_key = os.getenv("OPENROUTER_API_KEY")
-    
-    if not api_key:
-        print("Error: OPENROUTER_API_KEY not found in environment variables.")
-        return
+dotenv.load_dotenv()
 
-    print(f"Found API Key: {api_key[:5]}...{api_key[-4:]}")
+def main():
+    graph = get_agent_graph()
     
-    try:
-        llm = ChatOpenAI(
-            openai_api_key=api_key,
-            openai_api_base="https://openrouter.ai/api/v1",
-            model_name=os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash")
-        )
-        response = llm.invoke("Hello, are you working?")
-        print("\nAPI Check Successful!")
-        print(f"Response: {response.content}")
-    except Exception as e:
-        print(f"\nAPI Check Failed: {e}")
+    print("Welcome to Smart Event Planner! Type 'quit' to exit.")
+    
+    # Simple thread ID configuration for state endurance
+    config = {"configurable": {"thread_id": "1"}}
+    
+    while True:
+        try:
+            user_input = input("You: ")
+            if user_input.lower() in ["quit", "exit", "q"]:
+                print("Goodbye!")
+                break
+                
+            # Stream events from the graph
+            # stream_mode="values" returns the full state at each step
+            events = graph.stream(
+                {"messages": [HumanMessage(content=user_input)]},
+                config,
+                stream_mode="values"
+            )
+            
+            for event in events:
+                if "messages" in event:
+                    messages = event["messages"]
+                    if messages:
+                        last_message = messages[-1]
+                        # Only print AI messages to avoid double printing user input
+                        # And ensure we only print if it's actually an AI response (not tool call request)
+                        if last_message.type == "ai" and last_message.content:
+                            print(f"Agent: {last_message.content}")
+        except KeyboardInterrupt:
+            print("\nGoodbye!")
+            break
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-    verify_api()
+    main()

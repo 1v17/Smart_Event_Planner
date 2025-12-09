@@ -4,6 +4,7 @@ from typing import Annotated, Sequence, TypedDict
 from langchain_core.messages import BaseMessage
 from langgraph.graph import END, StateGraph, START, MessagesState
 from langgraph.prebuilt import ToolNode
+from langchain_core.messages import SystemMessage
 
 from llm import get_llm
 from tools import search_venues
@@ -25,7 +26,17 @@ def get_agent_graph():
     # Define the 'agent' node function
     def agent(state: MessagesState):
         messages = state["messages"]
-        response = llm_with_tools.invoke(messages)
+        # Add a system message if it's not already there (though usually we prepend it to the list passed to invoke)
+        # But 'messages' is the full history. 
+        # A simple way: prepend a SystemMessage if one isn't the first message?
+        # Or better: construct a list for the LLM that starts with the system prompt, followed by the conversation history.
+            
+        system_prompt = SystemMessage(
+            content="You are a helpful event planning assistant. specific details about venues including location, \
+                capacity, amenities, and price. Use the search_venues tool to find information.")
+        
+        # We invoke the LLM with the system prompt + history
+        response = llm_with_tools.invoke([system_prompt] + messages)
         return {"messages": [response]}
 
     # Define the 'tools' node

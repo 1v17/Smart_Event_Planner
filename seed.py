@@ -13,35 +13,35 @@ def seed_venues():
         venues = [
             {
                 "name": "Tech Hub Conference Center",
-                "location": "Downtown Innovation District",
+                "location": "Boston - Downtown Innovation District",
                 "capacity": 500,
                 "amenities": ["Wi-Fi", "Projector", "Video Conferencing", "Catering"],
                 "price_per_hour": 150
             },
             {
                 "name": "Green Garden Pavilion",
-                "location": "City Park",
+                "location": "Boston - City Park",
                 "capacity": 100,
                 "amenities": ["Outdoor Seating", "Garden View", "Tables and Chairs"],
                 "price_per_hour": 75
             },
             {
                 "name": "Historic Grand Hall",
-                "location": "Old Town",
+                "location": "Boston - Old Town",
                 "capacity": 300,
                 "amenities": ["Stage", "Sound System", "Lighting", "Bar"],
                 "price_per_hour": 250
             },
             {
                 "name": "Cozy Community Room",
-                "location": "Westside",
+                "location": "Cambridge - Westside",
                 "capacity": 50,
                 "amenities": ["Whiteboard", "Kitchenette", "TV"],
                 "price_per_hour": 40
             },
              {
                 "name": "Skyline Rooftop Lounge",
-                "location": "Financial District",
+                "location": "New York - Financial District",
                 "capacity": 120,
                 "amenities": ["Bar", "City View", "DJ Booth", "Lounge Furniture"],
                 "price_per_hour": 200
