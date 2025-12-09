@@ -1,1 +1,1 @@
-# Smart_Event_Planner
+# Smart Event Planner
