@@ -21,12 +21,13 @@ The goal is to provide a seamless, chat-based interface for event planning, acti
     - [x] Added unit tests (`tests/test_database.py`) and updated `requirements.txt` with `pytest` and `mongomock`.
 
 ### Part 2
-1.  **Tool Creation**:
-    -   Implement `tools.py` with functions like `search_venues(location, capacity, ...)` using MongoDB queries.
-    -   Wrap these functions as LangChain `Tools`.
-2.  **LLM Setup**:
-    -   Configure `ChatOpenAI` creating a client pointing to OpenRouter base URL.
-    -   Test basic connectivity with a simple prompt.
+- [x] **Tool Creation**:
+    - [x] Implement `tools.py` with functions like `search_venues(location, capacity, ...)` using MongoDB queries.
+    - [x] Wrap these functions as LangChain `Tools`.
+- [x] **LLM Setup**:
+    - [x] Configure `ChatOpenAI` (aliased as `Chatbot`) creating a client pointing to OpenRouter base URL.
+    - [x] Test basic connectivity with a simple prompt (Verified via configuration unit tests).
+    - [x] internal: Created `part2_report.md` and added unit tests.
 
 ### Part 3
 
