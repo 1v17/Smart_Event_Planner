@@ -4,3 +4,5 @@ langchain-openai
 pymongo
 python-dotenv
 pydantic
+pytest
+mongomock
