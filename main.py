@@ -16,7 +16,7 @@ def verify_api():
         llm = ChatOpenAI(
             openai_api_key=api_key,
             openai_api_base="https://openrouter.ai/api/v1",
-            model_name="google/gemini-2.0-flash-exp:free" 
+            model_name=os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash")
         )
         response = llm.invoke("Hello, are you working?")
         print("\nAPI Check Successful!")
