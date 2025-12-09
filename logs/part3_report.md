@@ -13,6 +13,23 @@ Successfully implemented the state definition and graph construction for the Sma
         - Normal edge: Routes from `tools` back to `agent`.
     - **Compilation**: Exposed `get_agent_graph()` to retrieve the compiled `Runnable`.
 
+### Graph Visualization
+```mermaid
+graph TD;
+    __start__([<p>__start__</p>]):::first
+    agent(agent)
+    tools(tools)
+    __end__([<p>__end__</p>]):::last
+    __start__ --> agent;
+    agent -.-> __end__;
+    agent -.-> tools;
+    tools --> agent;
+    classDef default fill:#f2f0ff,line-height:1.2
+    classDef first fill-opacity:0
+    classDef last fill:#bfb6fc
+```
+
+
 ## Testing Service
 - Created `tests/test_agent.py`.
 - Verified:
