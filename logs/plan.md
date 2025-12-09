@@ -10,14 +10,15 @@ The goal is to provide a seamless, chat-based interface for event planning, acti
 ## Execution Plan
 
 ### Part 1
-1.  **Project Initialization**:
-    -   Virtual environment already setup using miniconda.
-    -   Create `.env` file for `OPENROUTER_API_KEY` and `MONGO_URI`.
-    -   Verify in `main.py` that the openrouter api key is valid.
-2.  **Database Implementation**:
-    -   Setup local MongoDB instance.
-    -   Implement `database.py` to handle connections.
-    -   Create a seeding script (`seed.py`) to populate the `venues` collection with dummy data (Names, Locations, Capacities, Amenities).
+- [x] **Project Initialization**:
+    - [x] Virtual environment already setup using miniconda.
+    - [x] Create `.env` file for `OPENROUTER_API_KEY` and `MONGO_URI`.
+    - [x] Verify in `main.py` that the openrouter api key is valid.
+- [x] **Database Implementation**:
+    - [x] Setup local MongoDB instance.
+    - [x] Implement `database.py` to handle connections.
+    - [x] Create a seeding script (`seed.py`) to populate the `venues` collection with dummy data (Names, Locations, Capacities, Amenities).
+    - [x] Added unit tests (`tests/test_database.py`) and updated `requirements.txt` with `pytest` and `mongomock`.
 
 ### Part 2
 1.  **Tool Creation**:

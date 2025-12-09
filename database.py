@@ -26,6 +26,9 @@ def get_database():
         # But for this project, we'll enforce a specific DB name or allow it to be configured.
         db_name = os.getenv("MONGO_DB_NAME", "smart_event_planner")
         return client[db_name]
-    except Exception as e:
-        print(f"Error connecting to MongoDB: {e}")
+    except pymongo.errors.ConnectionFailure as e:
+        print(f"MongoDB connection failed: {e}")
+        raise
+    except pymongo.errors.ConfigurationError as e:
+        print(f"MongoDB configuration error: {e}")
         raise
