@@ -1,0 +1,70 @@
+import operator
+from typing import Annotated, Sequence, TypedDict
+
+from langchain_core.messages import BaseMessage
+from langgraph.graph import END, StateGraph, START, MessagesState
+from langgraph.prebuilt import ToolNode
+
+from llm import get_llm
+from tools import search_venues
+
+# 1. State Definition
+# We use the built-in MessagesState which already has:
+# messages: Annotated[Sequence[BaseMessage], operator.add]
+
+
+# 2. Graph Construction
+
+def get_agent_graph():
+    
+    # Initialize LLM and bind tools
+    llm = get_llm()
+    tools = [search_venues]
+    llm_with_tools = llm.bind_tools(tools)
+
+    # Define the 'agent' node function
+    def agent(state: MessagesState):
+        messages = state["messages"]
+        response = llm_with_tools.invoke(messages)
+        return {"messages": [response]}
+
+    # Define the 'tools' node
+    # ToolNode is a prebuilt node that executes tool calls found in the last message
+    tool_node = ToolNode(tools)
+
+    # Define the conditional edge logic
+    def should_continue(state: MessagesState) -> str:
+        messages = state["messages"]
+        last_message = messages[-1]
+        
+        # If the LLM wants to call tools, route to "tools"
+        if last_message.tool_calls:
+            return "tools"
+        # Otherwise, stop
+        return END
+
+    # Build the graph
+    workflow = StateGraph(MessagesState)
+
+    workflow.add_node("agent", agent)
+    workflow.add_node("tools", tool_node)
+
+    workflow.add_edge(START, "agent")
+    
+    # Conditional edge from agent
+    workflow.add_conditional_edges(
+        "agent",
+        should_continue,
+        {
+            "tools": "tools",
+            END: END
+        }
+    )
+
+    # Edge from tools back to agent
+    workflow.add_edge("tools", "agent")
+
+    # Compile the graph
+    app = workflow.compile()
+    
+    return app

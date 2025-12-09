@@ -31,12 +31,12 @@ The goal is to provide a seamless, chat-based interface for event planning, acti
 
 ### Part 3
 
-1.  **State Definition**:
-    -   Define `AgentState` in `agent.py` to track conversation history and tool outputs.
-2.  **Graph Construction**:
-    -   Define nodes: `agent` (calls LLM), `tools` (executes tools).
-    -   Define edges: Logic to switch between agent and tools based on LLM output.
-    -   Compile the graph.
+3.  **State Definition**:
+    - [x] Define `AgentState` in `agent.py` to track conversation history and tool outputs.
+4.  **Graph Construction**:
+    - [x] Define nodes: `agent` (calls LLM), `tools` (executes tools).
+    - [x] Define edges: Logic to switch between agent and tools based on LLM output.
+    - [x] Compile the graph.
 
 ### Part 4
 1.  **Interface**:
