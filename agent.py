@@ -1,9 +1,6 @@
-import operator
-from typing import Annotated, Sequence, TypedDict
-
-from langchain_core.messages import BaseMessage
 from langgraph.graph import END, StateGraph, START, MessagesState
 from langgraph.prebuilt import ToolNode
+from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.messages import SystemMessage
 
 from llm import get_llm
@@ -32,8 +29,12 @@ def get_agent_graph():
         # Or better: construct a list for the LLM that starts with the system prompt, followed by the conversation history.
             
         system_prompt = SystemMessage(
-            content="You are a helpful event planning assistant. specific details about venues including location, \
-                capacity, amenities, and price. Use the search_venues tool to find information.")
+            content="You are a venue search assistant for event planning. You ONLY help with venue-related queries: searching venues, \
+                comparing options, providing venue details (location, capacity, amenities, price), and helping users choose venues. \
+                Use the search_venues tool to find information. \
+                \
+                REJECT all non-venue requests (general questions, creative writing, coding, weather, etc.) with: \
+                'I'm sorry, I can only help with venue-related queries for event planning.'")
         
         # We invoke the LLM with the system prompt + history
         response = llm_with_tools.invoke([system_prompt] + messages)
@@ -75,7 +76,8 @@ def get_agent_graph():
     # Edge from tools back to agent
     workflow.add_edge("tools", "agent")
 
-    # Compile the graph
-    app = workflow.compile()
+    # Compile the graph with memory checkpointer
+    memory = MemorySaver()
+    app = workflow.compile(checkpointer=memory)
     
     return app

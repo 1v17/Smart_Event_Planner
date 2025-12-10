@@ -33,7 +33,6 @@ def main():
                     if messages:
                         last_message = messages[-1]
                         # Only print AI messages to avoid double printing user input
-                        # And ensure we only print if it's actually an AI response (not tool call request)
                         if last_message.type == "ai" and last_message.content:
                             print(f"Agent: {last_message.content}")
         except KeyboardInterrupt:

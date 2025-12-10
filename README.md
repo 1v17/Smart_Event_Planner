@@ -63,6 +63,31 @@ The system leverages:
         ```
     - Type `quit` or `exit` to end the session.
 
+## Example Usage
+
+Once you run `python main.py`, you can interact with the agent like this:
+
+```
+You: I need a venue in Boston for 150 people
+Agent: I found several venues in Boston that can accommodate 150 people. Here are some options:
+       - Grand Ballroom: Capacity 200, $5000/day, Amenities: WiFi, Projector, Catering
+       - Tech Conference Center: Capacity 180, $3500/day, Amenities: WiFi, Projector, Parking
+       Would you like more details about any of these venues?
+
+You: What amenities does the first one have?
+Agent: The Grand Ballroom has the following amenities:
+       - WiFi
+       - Projector
+       - Catering
+
+You: Show me venues with parking
+Agent: Here are the venues with parking available:
+       - Tech Conference Center: Capacity 180, $3500/day
+       - Downtown Meeting Hall: Capacity 100, $2000/day
+```
+
+The agent understands context and can answer follow-up questions about previously mentioned venues.
+
 ## Testing
 
 To run the unit tests:

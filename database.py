@@ -1,5 +1,5 @@
 import os
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -18,17 +18,12 @@ def get_database():
 
     try:
         client = MongoClient(mongo_uri)
-        # Verify connection by attempting to print server info (optional, helps debugging)
-        # client.server_info() 
-        
         # Return the specific database. 
-        # If the URI doesn't skip the db name, we could use get_default_database()
-        # But for this project, we'll enforce a specific DB name or allow it to be configured.
         db_name = os.getenv("MONGO_DB_NAME", "smart_event_planner")
         return client[db_name]
-    except pymongo.errors.ConnectionFailure as e:
+    except errors.ConnectionFailure as e:
         print(f"MongoDB connection failed: {e}")
         raise
-    except pymongo.errors.ConfigurationError as e:
+    except errors.ConfigurationError as e:
         print(f"MongoDB configuration error: {e}")
         raise

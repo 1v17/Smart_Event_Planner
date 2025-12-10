@@ -4,7 +4,8 @@ from typing import List, Dict, Optional
 import re
 
 @tool
-def search_venues(query: str = "", location: Optional[str] = None, capacity: Optional[int] = None, amenities: Optional[List[str]] = None) -> List[Dict]:
+def search_venues(query: str = "", location: Optional[str] = None, capacity: Optional[int] = None, 
+                  amenities: Optional[List[str]] = None) -> List[Dict]:
     """
     Search for venues based on location, capacity, and amenities.
     
@@ -30,15 +31,6 @@ def search_venues(query: str = "", location: Optional[str] = None, capacity: Opt
         
     if amenities:
         # Match if the venue has ALL the requested amenities
-        # We'll use $all operator, but we need to ensure case-insensitivity if possible?
-        # MongoDB simple $all is exact match. For case-insensitive list matching, it's harder.
-        # For simplicity in this demo, we will assume the amenities passed are somewhat normalized or we use regex for each.
-        # Let's try to be robust:
-        # We want venues where 'amenities' array contains items that match our requested amenities (case-insensitive)
-        
-        # Complex regex query for list items is tricky. Let's stick to simple regex match for each item if possible,
-        # but $all with regex is not directly supported in standard simple syntax.
-        # A workaround is using $and with $elemMatch for each amenity.
         
         and_conditions = []
         for amenity in amenities:
