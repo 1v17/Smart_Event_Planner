@@ -1,16 +1,12 @@
 import dotenv
-from langchain_core.messages import HumanMessage
 from agent import get_agent_graph
 
 dotenv.load_dotenv()
 
 def main():
-    graph = get_agent_graph()
+    agent_executor = get_agent_graph()
     
     print("Welcome to Smart Event Planner! Type 'quit' to exit.")
-    
-    # Simple thread ID configuration for state endurance
-    config = {"configurable": {"thread_id": "1"}}
     
     while True:
         try:
@@ -19,22 +15,13 @@ def main():
                 print("Goodbye!")
                 break
                 
-            # Stream events from the graph
-            # stream_mode="values" returns the full state at each step
-            events = graph.stream(
-                {"messages": [HumanMessage(content=user_input)]},
-                config,
-                stream_mode="values"
-            )
+            # Invoke the agent with the user input
+            response = agent_executor.invoke({"input": user_input})
             
-            for event in events:
-                if "messages" in event:
-                    messages = event["messages"]
-                    if messages:
-                        last_message = messages[-1]
-                        # Only print AI messages to avoid double printing user input
-                        if last_message.type == "ai" and last_message.content:
-                            print(f"Agent: {last_message.content}")
+            # Print the agent's response
+            if "output" in response:
+                print(f"Agent: {response['output']}")
+            
         except KeyboardInterrupt:
             print("\nGoodbye!")
             break
