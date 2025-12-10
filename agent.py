@@ -7,6 +7,8 @@ from tools import search_venues
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+ITERATION_LIMIT = 10
+
 def get_agent_graph():
     """
     Returns a ReAct agent executor for venue search assistance with conversation memory.
@@ -67,7 +69,7 @@ Thought: {agent_scratchpad}"""
         memory=memory,
         verbose=True,
         handle_parsing_errors=True,
-        max_iterations=5
+        max_iterations=ITERATION_LIMIT
     )
     
     return agent_executor
