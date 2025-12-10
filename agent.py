@@ -6,13 +6,6 @@ from langchain_core.messages import SystemMessage
 from llm import get_llm
 from tools import search_venues
 
-# 1. State Definition
-# We use the built-in MessagesState which already has:
-# messages: Annotated[Sequence[BaseMessage], operator.add]
-
-
-# 2. Graph Construction
-
 def get_agent_graph():
     
     # Initialize LLM and bind tools
@@ -23,10 +16,6 @@ def get_agent_graph():
     # Define the 'agent' node function
     def agent(state: MessagesState):
         messages = state["messages"]
-        # Add a system message if it's not already there (though usually we prepend it to the list passed to invoke)
-        # But 'messages' is the full history. 
-        # A simple way: prepend a SystemMessage if one isn't the first message?
-        # Or better: construct a list for the LLM that starts with the system prompt, followed by the conversation history.
             
         system_prompt = SystemMessage(
             content="You are a venue search assistant for event planning. You ONLY help with venue-related queries: searching venues, \

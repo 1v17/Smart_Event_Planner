@@ -14,6 +14,21 @@ The system leverages:
 - **Context Awareness**: The agent remembers conversation context (e.g., "What amenities does it have?" refers to the previously discussed venue).
 - **Tool Integration**: Automatically calls database tools to fetch real-time data.
 
+```mermaid
+graph TD;
+    __start__([<p>__start__</p>]):::first
+    agent(agent)
+    tools(tools)
+    __end__([<p>__end__</p>]):::last
+    __start__ --> agent;
+    agent -.-> __end__;
+    agent -.-> tools;
+    tools --> agent;
+    classDef default fill:#f2f0ff,line-height:1.2
+    classDef first fill-opacity:0
+    classDef last fill:#bfb6fc
+```
+
 ## Prerequisites
 
 - **Python 3.8+**
