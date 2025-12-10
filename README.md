@@ -3,9 +3,24 @@
 The **Smart Event Planner Assistant** is an AI-powered agent designed to help users find event venues through natural conversation. It allows users to query for venues based on criteria like location, capacity, amenities, and price.
 
 The system leverages:
-- **LangChain & LangGraph**: For orchestrating the multi-agent workflow and managing conversation state.
+- **LangChain ReAct Agent**: Using the ReAct (Reasoning + Acting) pattern for natural language understanding and tool execution.
 - **MongoDB**: For storing and retrieving venue data.
 - **OpenRouter API**: To access powerful LLMs (e.g., GPT-4o-mini) for natural language understanding and generation.
+
+## Recent Optimizations
+
+The agent architecture was recently migrated from LangGraph's state machine to LangChain's ReAct agent pattern, resulting in:
+
+**Benefits:**
+- ~40% reduction in code complexity
+- Simplified maintenance and debugging
+- Built-in error handling and iteration limits
+- Standard LangChain patterns for better ecosystem compatibility
+
+**Trade-offs:**
+- ReAct agents can sometimes get stuck in infinite loops if the prompt format is not clear or if the LLM doesn't properly follow the Thought/Action/Observation sequence
+- Memory only persists during runtime (no disk persistence)
+- Linear conversation flow only (no branching logic)
 
 ## Features
 

@@ -1,9 +1,11 @@
+import warnings
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
-
 from llm import get_llm
 from tools import search_venues
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 def get_agent_graph():
     """
@@ -19,13 +21,13 @@ def get_agent_graph():
     react_prompt = PromptTemplate.from_template(
         """You are a venue search assistant for event planning. You ONLY help with venue-related queries: searching venues, comparing options, providing venue details (location, capacity, amenities, price), and helping users choose venues.
 
-REJECT all non-venue requests (general questions, creative writing, coding, weather, etc.).'
+REJECT all non-venue requests (general questions, creative writing, coding, weather, etc.).
 
 You have access to the following tools:
 
 {tools}
 
-Use the following format:
+Use the following format EXACTLY:
 
 Question: the input question you must answer
 Thought: you should always think about what to do
@@ -36,7 +38,11 @@ Observation: the result of the action
 Thought: I now know the final answer
 Final Answer: the final answer to the original input question
 
-Begin!
+IMPORTANT: After seeing an Observation, you MUST either:
+1. Start a new Thought/Action/Action Input sequence, OR
+2. Write "Thought: I now know the final answer" followed by "Final Answer: [your answer]"
+
+Do NOT write lengthy explanations in the middle of the chain. Save all user-facing explanations for the Final Answer.
 
 Previous conversation history:
 {chat_history}
