@@ -3,7 +3,7 @@
 The **Smart Event Planner Assistant** is an AI-powered agent designed to help users find event venues through natural conversation. It allows users to query for venues based on criteria like location, capacity, amenities, and price.
 
 The system leverages:
-- **LangChain & LangGraph**: For orchestrating the multi-agent workflow and managing conversation state.
+- **LangChain & LangGraph**: For orchestrating the workflow and managing conversation state.
 - **MongoDB**: For storing and retrieving venue data.
 - **OpenRouter API**: To access powerful LLMs (e.g., GPT-4o-mini) for natural language understanding and generation.
 
