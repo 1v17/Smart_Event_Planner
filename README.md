@@ -12,7 +12,7 @@ The system leverages:
 The agent architecture was recently migrated from LangGraph's state machine to LangChain's ReAct agent pattern, resulting in:
 
 **Benefits:**
-- ~40% reduction in code complexity
+- Reduction in code complexity
 - Simplified maintenance and debugging
 - Built-in error handling and iteration limits
 - Standard LangChain patterns for better ecosystem compatibility

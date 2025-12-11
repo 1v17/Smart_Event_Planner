@@ -1,4 +1,4 @@
-# run with command line: pytest tests\test_database.py
+# run with command line: python -m pytest tests\test_database.py
 import pytest
 import mongomock
 from database import get_database
@@ -23,7 +23,7 @@ def test_get_database_missing_uri(monkeypatch):
     with pytest.raises(ValueError, match="MONGO_URI not found"):
         get_database()
 
-def test_seed_venues_integration(mock_mongo_env):
+def test_seed_venues_integration():
     """
     Test the seeding logic with mongomock. 
     This effectively tests seed.py logic without a real DB.
@@ -31,7 +31,6 @@ def test_seed_venues_integration(mock_mongo_env):
     # We need to import seed_venues inside the test or patch get_database in seed module
     # Because seed.py imports get_database at top level, but we want to intercept the DB it gets.
     from seed import seed_venues
-    from unittest.mock import patch
 
     with mongomock.patch(servers=(('test_uri', 27017),)):
         # Call seed
